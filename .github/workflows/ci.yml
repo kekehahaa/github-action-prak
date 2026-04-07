@@ -31,7 +31,12 @@ jobs:
       shell: bash -l {0}
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-
+    
+    - name: Run tests
+      shell: bash -l {0}
+      run: |
+        pytest
+    
     - name: Send Slack notification on failure
       if: failure()
       uses: slackapi/slack-github-action@v1
@@ -44,15 +49,10 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*Repository:* ${{ github.repository }}\n*Branch:* ${{ github.ref }}\n*Author:* ${{ github.actor }}\n*Status:* Failed ❌"
+                  "text": "*Repository:* ${{ github.repository }}\n*Branch:* ${{ github.ref }}\n*Author:* ${{ github.actor }}\n*Python:* ${{ matrix.python-version }}\n*Status:* Failed ❌"
                 }
               }
             ]
           }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    
-    - name: Run tests
-      shell: bash -l {0}
-      run: |
-        pytest
