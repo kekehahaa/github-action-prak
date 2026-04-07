@@ -4,15 +4,18 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
     
-    - name: Set up Conda
+    - name: Set up Conda with Python ${{ matrix.python-version }}
       uses: conda-incubator/setup-miniconda@v2
       with:
-        python-version: '3.10'
+        python-version: ${{ matrix.python-version }}
         activate-environment: ciprak
         auto-activate-base: false
     
