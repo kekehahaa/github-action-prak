@@ -1,0 +1,1 @@
+![Test Status](https://github.com/kekehahaa/github-action-prak/blob/main/.github/workflows/ci.yml/badge.svg)
